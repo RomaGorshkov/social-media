@@ -5,7 +5,7 @@ import App from './App';
 
 import store from './store/store';
 
-import './index.css';
+import './styles/globals.scss';
 
 createRoot(document.getElementById('root')!).render(
   <Provider store={store}>

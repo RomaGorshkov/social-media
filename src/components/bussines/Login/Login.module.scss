@@ -1,0 +1,108 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  width: 100vw;
+  height: 100vh;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    background-color: var(--color-bg-component);
+    min-width: 600px;
+    min-height: 500px;
+  }
+  &__title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: white;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+  }
+
+  &__formGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  &__input {
+    display: flex;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    background-color: #30363d;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    font-size: 1rem;
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+    &::placeholder {
+      color: #555;
+      transform: translateY(0);
+    }
+  }
+
+  &__submitGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  &__checkboxGroup {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    & label {
+      color: var(--color-text);
+      font-size: 16px;
+    }
+  }
+
+  &__checkbox {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  &__submit {
+    width: 150px;
+    background-color: var(--color-accent);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    &:hover {
+      background-color: #164fa5;
+    }
+  }
+
+  &__forgotPassword {
+    color: var(--color-text);
+    font-size: 16px;
+    & a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+  }
+}
