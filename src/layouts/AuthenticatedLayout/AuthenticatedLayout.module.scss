@@ -1,0 +1,11 @@
+.authenticatedLayout {
+  display: flex;
+  min-height: 100vh;
+  &__mainContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 20px;
+  }
+}
