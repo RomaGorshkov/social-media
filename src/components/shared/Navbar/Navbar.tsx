@@ -10,58 +10,41 @@ import { MdAccountCircle } from 'react-icons/md';
 
 import styles from './Navbar.module.scss';
 
+const navLinks = [
+  { to: '/', icon: <FaHome />, label: 'Home' },
+  { to: '/coins', icon: <FaCoins />, label: 'Coins' },
+  { to: '/explore', icon: <FaHashtag />, label: 'Explore' },
+  { to: '/profile', icon: <CgProfile />, label: 'Profile' },
+];
+
 const Navbar: React.FC = () => {
   return (
-    <nav className={styles.navbar}>
+    <div className={styles.navbar}>
       <header className={styles.navbar__header}>
         <FaCreativeCommons className={styles.navbar__headerLogo} />
         <div className={styles.navbar__headerTitle}>Crypto Club</div>
       </header>
       <div className={styles.navbar__menu}>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            isActive ? `${styles.navbar__link} ${styles['navbar__link--active']}` : styles.navbar__link
-          }
-        >
-          <FaHome className={styles.navbar__linkIcon} />
-          Home
-        </NavLink>
-        <NavLink
-          to="/coins"
-          className={({ isActive }) =>
-            isActive ? `${styles.navbar__link} ${styles['navbar__link--active']}` : styles.navbar__link
-          }
-        >
-          <FaCoins className={styles.navbar__linkIcon} />
-          Coins
-        </NavLink>
-        <NavLink
-          to="/explore"
-          className={({ isActive }) =>
-            isActive ? `${styles.navbar__link} ${styles['navbar__link--active']}` : styles.navbar__link
-          }
-        >
-          <FaHashtag className={styles.navbar__linkIcon} />
-          Explore
-        </NavLink>
-        <NavLink
-          to="/profile"
-          className={({ isActive }) =>
-            isActive ? `${styles.navbar__link} ${styles['navbar__link--active']}` : styles.navbar__link
-          }
-        >
-          <CgProfile className={styles.navbar__linkIcon} />
-          Profile
-        </NavLink>
+        {navLinks.map(({ to, label, icon }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) =>
+              isActive ? `${styles.navbar__link} ${styles['navbar__link--active']}` : styles.navbar__link
+            }
+          >
+            <div className={styles.navbar__linkIcon}>{icon}</div>
+            <span className={styles.navbar__menuItemText}>{label}</span>
+          </NavLink>
+        ))}
       </div>
-      <footer className={styles.navbar__footer}>
+      <div className={styles.navbar__footer}>
         <div className={styles.navbar__accountInfo}>
           <MdAccountCircle className={styles.navbar__accountInfoIcon} />
           <span className={styles.navbar__accountInfoText}>Account</span>
         </div>
-      </footer>
-    </nav>
+      </div>
+    </div>
   );
 };
 

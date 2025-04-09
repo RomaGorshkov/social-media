@@ -9,17 +9,20 @@
   background-color: var(--color-bg-component);
   box-sizing: border-box;
   z-index: 1000;
+
   &__header {
     display: flex;
     align-items: center;
     margin-bottom: 30px;
     width: 100%;
   }
+
   &__headerLogo {
     color: var(--color-accent);
     font-size: 2em;
     margin-right: 10px;
   }
+
   &__headerTitle {
     font-size: 1.5em;
     font-weight: bold;
@@ -40,31 +43,38 @@
     transition: background-color 0.3s ease;
     width: 100%;
     box-sizing: border-box;
+
     &:hover {
       color: var(--color-accent);
     }
+
     &--active {
       color: var(--color-accent);
     }
   }
+
   &__linkIcon {
     font-size: 1.2em;
     margin-right: 10px;
   }
+
   &__footer {
     margin-top: auto;
     width: 100%;
   }
+
   &__accountInfo {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
   }
+
   &__accountInfoIcon {
     font-size: 1.5em;
     margin-right: 10px;
   }
+
   &__accountInfoText {
     font-size: 1em;
     color: var(--color-text);

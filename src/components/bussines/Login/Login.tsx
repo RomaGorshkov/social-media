@@ -1,7 +1,7 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import styles from './Login.module.scss';
-import { NavLink } from 'react-router-dom';
 
 const Login: React.FC = () => {
   return (

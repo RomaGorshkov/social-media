@@ -6,6 +6,7 @@
   background-color: var(--color-bg);
   width: 100vw;
   height: 100vh;
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -16,11 +17,13 @@
     min-width: 600px;
     min-height: 500px;
   }
+
   &__title {
     font-size: 2rem;
     margin-bottom: 20px;
     color: white;
   }
+
   &__form {
     display: flex;
     flex-direction: column;
@@ -48,10 +51,12 @@
     border: 1px solid var(--color-border);
     border-radius: 5px;
     font-size: 1rem;
+
     &:focus {
       outline: none;
       border-color: var(--color-accent);
     }
+
     &::placeholder {
       color: #555;
       transform: translateY(0);
@@ -70,6 +75,7 @@
     display: flex;
     align-items: center;
     margin-right: 20px;
+
     & label {
       color: var(--color-text);
       font-size: 16px;
@@ -92,6 +98,7 @@
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
+
     &:hover {
       background-color: #164fa5;
     }
@@ -100,6 +107,7 @@
   &__forgotPassword {
     color: var(--color-text);
     font-size: 16px;
+
     & a {
       color: var(--color-accent);
       text-decoration: none;
