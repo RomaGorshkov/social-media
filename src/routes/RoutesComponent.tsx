@@ -1,14 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import AuthenticatedLayout from '../layouts/AuthenticatedLayout/AuthenticatedLayout';
-import { CoinsPage, HomePage, LoginPage } from '../pages';
+import PrivateLayout from '../layouts/PrivateLayout/PrivateLayout';
+import { CoinsPage, HomePage, LoginPage, RegisterPage } from '../pages';
 
 const RoutesComponent: React.FC = () => {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      <Route element={<AuthenticatedLayout />}>
+      <Route path="/register" element={<RegisterPage />} />
+      <Route element={<PrivateLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/coins" element={<CoinsPage />} />
       </Route>

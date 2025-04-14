@@ -1,49 +1,83 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { AuthInput } from '../../../types';
+
+import { useAppDispatch } from '../../../store/storeHooks';
+import { loginUser } from '../../../firebase/authUser';
+import { setLoginUser } from '../../../store/reducers/auth';
+
+import AuthLayout from '../../../layouts/AuthLayout/AuthLayout';
+import CustomInput from '../../shared/CustomInput/CustomInput';
 
 import styles from './Login.module.scss';
 
+const loginInputs: AuthInput[] = [
+  { type: 'email', id: 'email', name: 'email', placeholder: 'Email address' },
+  { type: 'password', id: 'password', name: 'password', placeholder: 'Password' },
+];
+
 const Login: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+    onSubmit: async (values) => {
+      const user = await loginUser(values.email, values.password, values.rememberMe);
+      dispatch(
+        setLoginUser({
+          email: user.email,
+          username: user.displayName,
+        }),
+      );
+      navigate('/');
+    },
+  });
+
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginContainer__content}>
-        <h1 className={styles.loginContainer__title}>Login</h1>
-        <form className={styles.loginContainer__form}>
-          <div className={styles.loginContainer__formGroup}>
+    <AuthLayout title="Login">
+      <form onSubmit={formik.handleSubmit} className={styles.loginContainer__form}>
+        {loginInputs.map(({ type, id, name, placeholder }) => (
+          <CustomInput
+            key={id}
+            type={type}
+            id={id}
+            name={name}
+            placeholder={placeholder}
+            value={String(formik.values[name as keyof typeof formik.values])}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.errors[name as keyof typeof formik.errors]}
+            touched={formik.touched[name as keyof typeof formik.touched]}
+          />
+        ))}
+        <div className={styles.loginContainer__submitGroup}>
+          <div className={styles.loginContainer__checkboxGroup}>
             <input
-              type="email"
-              id="email"
-              placeholder="Email address"
-              name="email"
-              className={styles.loginContainer__input}
-              required
+              type="checkbox"
+              id="rememberMe"
+              checked={formik.values.rememberMe}
+              onChange={formik.handleChange}
+              name="rememberMe"
+              className={styles.loginContainer__checkbox}
             />
+            <label htmlFor="rememberMe">Remember me</label>
           </div>
-          <div className={styles.loginContainer__formGroup}>
-            <input
-              type="password"
-              id="password"
-              placeholder="Password"
-              name="password"
-              className={styles.loginContainer__input}
-              required
-            />
-          </div>
-          <div className={styles.loginContainer__submitGroup}>
-            <div className={styles.loginContainer__checkboxGroup}>
-              <input type="checkbox" id="rememberMe" name="rememberMe" className={styles.loginContainer__checkbox} />
-              <label htmlFor="rememberMe">Remember me</label>
-            </div>
-            <button type="submit" className={styles.loginContainer__submit}>
-              Login
-            </button>
-          </div>
-          <p className={styles.loginContainer__forgotPassword}>
-            Don't have an account? <NavLink to="/register">Register</NavLink>
-          </p>
-        </form>
-      </div>
-    </div>
+          <button type="submit" className={styles.loginContainer__submit}>
+            Login
+          </button>
+        </div>
+        <p className={styles.loginContainer__registerLink}>
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
+      </form>
+    </AuthLayout>
   );
 };
 

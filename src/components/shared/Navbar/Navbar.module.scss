@@ -71,12 +71,32 @@
   }
 
   &__accountInfoIcon {
-    font-size: 1.5em;
+    font-size: 2em;
     margin-right: 10px;
   }
 
   &__accountInfoText {
     font-size: 1em;
     color: var(--color-text);
+  }
+
+  &__authAccount {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__logoutButton {
+    width: 150px;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(155, 13, 13);
+    }
   }
 }

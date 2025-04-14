@@ -8,6 +8,10 @@ import { FaHashtag } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
 import { MdAccountCircle } from 'react-icons/md';
 
+import { setLogoutUser } from '../../../store/reducers/auth';
+import { logoutUser } from '../../../firebase/authUser';
+import { useAppSelector } from '../../../store/storeHooks';
+
 import styles from './Navbar.module.scss';
 
 const navLinks = [
@@ -18,6 +22,14 @@ const navLinks = [
 ];
 
 const Navbar: React.FC = () => {
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  console.log(isAuthenticated);
+
+  const handleLogout = async () => {
+    await logoutUser();
+    setLogoutUser();
+  };
+
   return (
     <div className={styles.navbar}>
       <header className={styles.navbar__header}>
@@ -40,8 +52,21 @@ const Navbar: React.FC = () => {
       </div>
       <div className={styles.navbar__footer}>
         <div className={styles.navbar__accountInfo}>
-          <MdAccountCircle className={styles.navbar__accountInfoIcon} />
-          <span className={styles.navbar__accountInfoText}>Account</span>
+          <span className={styles.navbar__accountInfoText}>
+            {isAuthenticated ? (
+              <div className={styles.navbar__authAccount}>
+                <div>
+                  <MdAccountCircle className={styles.navbar__accountInfoIcon} />
+                  {user?.username}
+                </div>
+                <button onClick={handleLogout} className={styles.navbar__logoutButton}>
+                  Logout
+                </button>
+              </div>
+            ) : (
+              'Account'
+            )}
+          </span>
         </div>
       </div>
     </div>
