@@ -23,7 +23,6 @@ const navLinks = [
 
 const Navbar: React.FC = () => {
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
-  console.log(isAuthenticated);
 
   const handleLogout = async () => {
     await logoutUser();
