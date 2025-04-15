@@ -6,8 +6,11 @@ import { useAppDispatch } from './store/storeHooks';
 import { setLoginUser, setLogoutUser } from './store/reducers/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/config';
+import Preloader from './components/shared/Preloader/Preloader';
 
 const App: React.FC = () => {
+  const [isAuthChecked, setIsAuthChecked] = React.useState(false);
+
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
@@ -22,16 +25,13 @@ const App: React.FC = () => {
       } else {
         dispatch(setLogoutUser());
       }
+      setIsAuthChecked(true);
     });
 
     return () => unsubscribe();
   }, [dispatch]);
 
-  return (
-    <BrowserRouter>
-      <RoutesComponent />;
-    </BrowserRouter>
-  );
+  return <BrowserRouter>{!isAuthChecked ? <RoutesComponent /> : <Preloader />}</BrowserRouter>;
 };
 
 export default App;
