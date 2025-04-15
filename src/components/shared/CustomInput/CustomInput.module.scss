@@ -1,0 +1,29 @@
+.customInputContainer {
+  padding: 10px;
+  &__input {
+    display: flex;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    background-color: #30363d;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    font-size: 1rem;
+
+    &:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+
+    &::placeholder {
+      color: #555;
+      transform: translateY(0);
+    }
+  }
+  &__error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+  }
+}

@@ -1,10 +1,18 @@
-.loginContainer {
+.registerContainer {
   &__form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 20px;
+    padding: 10px;
+  }
+
+  &__formGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 
   &__submitGroup {
@@ -15,26 +23,8 @@
     margin-top: 10px;
   }
 
-  &__checkboxGroup {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-
-    & label {
-      color: var(--color-text);
-      font-size: 16px;
-    }
-  }
-
-  &__checkbox {
-    width: 15px;
-    height: 15px;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-
   &__submit {
-    width: 150px;
+    width: 200px;
     background-color: var(--color-accent);
     color: white;
     padding: 10px 20px;
@@ -48,7 +38,7 @@
     }
   }
 
-  &__registerLink {
+  &__loginLink {
     color: var(--color-text);
     font-size: 16px;
 
