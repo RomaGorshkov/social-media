@@ -1,3 +1,5 @@
+@use '../../../styles/breakpoints' as *;
+
 .navbar {
   display: flex;
   flex-direction: column;
@@ -9,6 +11,23 @@
   background-color: var(--color-bg-component);
   box-sizing: border-box;
   z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+
+  @include respond(md) {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    padding: 60px 20px 20px;
+  }
+
+  &--open {
+    @include respond(md) {
+      transform: translateX(0);
+    }
+  }
 
   &__header {
     display: flex;
@@ -31,6 +50,11 @@
 
   &__menu {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: flex-start;
+    flex-grow: 1;
   }
 
   &__link {
@@ -58,16 +82,25 @@
     margin-right: 10px;
   }
 
-  &__footer {
-    margin-top: auto;
+  &__authAccount {
+    display: flex;
     width: 100%;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 20px;
   }
 
-  &__accountInfo {
+  &__userName {
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
+    width: 100%;
+    color: var(--color-text);
+    padding: 20px;
+
+    & svg {
+      margin-right: 8px;
+    }
   }
 
   &__accountInfoIcon {
@@ -75,28 +108,80 @@
     margin-right: 10px;
   }
 
-  &__accountInfoText {
-    font-size: 1em;
-    color: var(--color-text);
-  }
-
-  &__authAccount {
-    display: flex;
-    flex-direction: column;
-  }
-
   &__logoutButton {
-    width: 150px;
-    background-color: red;
+    width: 100%;
+    background-color: #a82f28;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
     cursor: pointer;
 
     &:hover {
       background-color: rgb(155, 13, 13);
+    }
+  }
+
+  &__burger {
+    display: none;
+    width: 30px;
+    height: 24px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+    cursor: pointer;
+
+    @include respond(md) {
+      display: block;
+    }
+
+    & span {
+      background-color: var(--color-text);
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      border-radius: 3px;
+      transition: 0.3s ease;
+      left: 0;
+
+      &:nth-child(1) {
+        top: 0;
+      }
+      &:nth-child(2) {
+        top: 10px;
+      }
+      &:nth-child(3) {
+        top: 20px;
+      }
+    }
+
+    &--active span {
+      &:nth-child(1) {
+        transform: rotate(45deg);
+        top: 10px;
+      }
+      &:nth-child(2) {
+        opacity: 0;
+      }
+      &:nth-child(3) {
+        transform: rotate(-45deg);
+        top: 10px;
+      }
+    }
+  }
+
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 900;
+
+    @include respond(md) {
+      display: block;
     }
   }
 }
