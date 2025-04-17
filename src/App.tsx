@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import RoutesComponent from './routes/RoutesComponent';
 import Preloader from './components/shared/Preloader/Preloader';
 
 import { useAppDispatch } from './store/storeHooks';
 import { setLoginUser, setLogoutUser } from './store/reducers/auth';
-import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/config';
 
 const App: React.FC = () => {
@@ -17,12 +17,15 @@ const App: React.FC = () => {
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(
-          setLoginUser({
-            username: user.displayName,
-            email: user.email,
-          }),
-        );
+        const userData = {
+          displayName: user.displayName,
+          email: user.email,
+          uid: user.uid,
+          photoURL: user.photoURL,
+          phoneNumber: user.phoneNumber,
+          emailVerified: user.emailVerified,
+        };
+        dispatch(setLoginUser(userData));
       } else {
         dispatch(setLogoutUser());
       }
