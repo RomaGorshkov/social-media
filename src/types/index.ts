@@ -7,6 +7,14 @@ export interface User {
   phoneNumber?: string;
 }
 
+export interface Post {
+  id: string;
+  title: string;
+  content: string;
+  userId: string;
+  createdAt: number;
+}
+
 export interface RegisterUserSchema {
   username: string;
   email: string;

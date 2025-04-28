@@ -1,67 +1,8 @@
-.profile {
-  background-color: var(--color-bg-component);
-  padding: 20px;
-  border-radius: 12px;
+.post {
+  margin-top: 20px;
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--color-text);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-  &__avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border: 2px solid var(--color-accent);
-  }
-
-  &__avatarPlaceholder {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-accent);
-    font-size: 48px;
-    margin-bottom: 10px;
-  }
-
-  &__name {
-    font-size: 24px;
-    margin: 5px 0;
-  }
-
-  &__email,
-  &__info {
-    margin: 2px 0;
-    font-size: 14px;
-  }
-
-  &__statusVerified {
-    margin: 2px 0;
-    font-size: 14px;
-    color: green;
-  }
-
-  &__statusNotVerified {
-    margin: 2px 0;
-    font-size: 14px;
-    color: red;
-  }
-
-  &__postsSection {
-    margin-top: 20px;
-    width: 100%;
-  }
-
-  &__newPost {
+  &__createPost {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
@@ -79,7 +20,7 @@
     box-sizing: border-box;
   }
 
-  &__postButton {
+  &__addPostButton {
     align-self: flex-end;
     width: 100px;
     margin-top: 10px;
@@ -94,6 +35,11 @@
     &:hover {
       background-color: #164fa5;
     }
+
+    &:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
   }
 
   &__postsList {
@@ -102,7 +48,36 @@
     gap: 15px;
   }
 
-  &__post {
+  &__loading {
+    text-align: center;
+    padding: 20px;
+  }
+
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #ccc;
+    border-top: 5px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  &__loadingText {
+    margin-top: 10px;
+    color: var(--color-text);
+  }
+
+  &__posts {
     background: #1e1e25;
     border-radius: 10px;
     padding: 15px;
@@ -118,18 +93,18 @@
     }
   }
 
-  &__postHeader {
+  &__postsHeader {
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
     color: var(--color-accent);
   }
 
-  &__postText {
+  &__postsText {
     margin: 5px 0 10px;
   }
 
-  &__postActions {
+  &__postsActions {
     display: flex;
     gap: 15px;
 

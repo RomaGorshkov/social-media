@@ -13,18 +13,16 @@ interface AuthLayoutProps {
 const AuthLayout: React.FC<AuthLayoutProps> = ({ title, children }) => {
   const { user } = useAppSelector((state) => state.auth);
 
+  if (user) return <Navigate to="/" replace />;
+
   return (
     <div>
-      {user ? (
-        <Navigate to="/" replace />
-      ) : (
-        <div className={styles.authLayout}>
-          <div className={styles.authLayout__content}>
-            <h1 className={styles.authLayout__title}>{title}</h1>
-            {children}
-          </div>
+      <div className={styles.authLayout}>
+        <div className={styles.authLayout__content}>
+          <h1 className={styles.authLayout__title}>{title}</h1>
+          {children}
         </div>
-      )}
+      </div>
     </div>
   );
 };
