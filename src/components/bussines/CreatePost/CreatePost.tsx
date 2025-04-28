@@ -1,13 +1,18 @@
 import React from 'react';
+import { MdOutlineEmojiEmotions } from 'react-icons/md';
 
 import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
 import { addNewPost, fetchUserPosts } from '../../../store/slices/postsSlice';
 
 import styles from './CreatePost.module.scss';
+import EmojiPicker, { Theme } from 'emoji-picker-react';
 
 const CreatePost: React.FC = () => {
   const [postText, setPostText] = React.useState('');
   const [isAdding, setIsAdding] = React.useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = React.useState(false);
+
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
   const dispatch = useAppDispatch();
 
@@ -42,15 +47,27 @@ const CreatePost: React.FC = () => {
     }
   };
 
+  const handleEmojiClick = (emoji: { emoji: string }) => {
+    setPostText((prev) => prev + emoji.emoji);
+    textareaRef.current?.focus();
+  };
+
   return (
     <div className={styles.post}>
       <div className={styles.post__createPost}>
-        <textarea
-          className={styles.post__textarea}
-          value={postText}
-          onChange={(e) => setPostText(e.target.value)}
-          placeholder="What's new?"
-        />
+        <div className={styles.post__textareaContainer}>
+          <textarea
+            className={styles.post__textarea}
+            value={postText}
+            onChange={(e) => setPostText(e.target.value)}
+            placeholder="What's new?"
+          />
+          <MdOutlineEmojiEmotions
+            className={styles.post__textareaIcon}
+            onClick={() => setShowEmojiPicker((prev) => !prev)}
+          />
+        </div>
+        {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} theme={Theme.DARK} />}
         <button className={styles.post__addPostButton} onClick={handleAddPost} disabled={!postText.trim() || isAdding}>
           {isAdding ? 'Posting...' : 'Post'}
         </button>

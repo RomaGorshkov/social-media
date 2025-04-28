@@ -8,9 +8,25 @@
     margin-bottom: 20px;
   }
 
+  &__textareaContainer {
+    display: inline-block;
+    position: relative;
+  }
+
+  &__textareaIcon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    padding: 5px;
+    color: #999;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
   &__textarea {
     width: 100%;
     padding: 10px;
+    padding-right: 30px;
     border-radius: 8px;
     border: none;
     background: #222;
