@@ -1,11 +1,11 @@
 import React from 'react';
-import { MdOutlineEmojiEmotions } from 'react-icons/md';
+import EmojiPicker, { Theme } from 'emoji-picker-react';
+import { MdOutlineEmojiEmotions, MdOutlineDelete } from 'react-icons/md';
 
 import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
-import { addNewPost, fetchUserPosts } from '../../../store/slices/postsSlice';
+import { addNewPost, deletePost, fetchUserPosts } from '../../../store/slices/postsSlice';
 
 import styles from './CreatePost.module.scss';
-import EmojiPicker, { Theme } from 'emoji-picker-react';
 
 const CreatePost: React.FC = () => {
   const [postText, setPostText] = React.useState('');
@@ -52,6 +52,15 @@ const CreatePost: React.FC = () => {
     textareaRef.current?.focus();
   };
 
+  const handleDeletePost = async (postId: string) => {
+    if (!user) return;
+    try {
+      await dispatch(deletePost({ postId, userId: user.uid })).unwrap();
+    } catch (error) {
+      console.error('Failed to delete post:', error);
+    }
+  };
+
   return (
     <div className={styles.post}>
       <div className={styles.post__createPost}>
@@ -78,7 +87,7 @@ const CreatePost: React.FC = () => {
             <div className={styles.post__spinner} />
             <p className={styles.post__loadingText}>Loading...</p>
           </div>
-        ) : userPosts.length > 0 ? (
+        ) : userPosts.length ? (
           sortedPosts.map((post, index) => (
             <div className={styles.post__posts} key={index}>
               <div className={styles.post__postsHeader}>
@@ -86,9 +95,8 @@ const CreatePost: React.FC = () => {
                 <span>{new Date(post.createdAt).toLocaleString()}</span>
               </div>
               <p className={styles.post__postsText}>{post.content}</p>
-              <div className={styles.post__postsActions}>
-                <button>👍</button>
-                <button>💬</button>
+              <div className={styles.post__deletePost}>
+                <MdOutlineDelete onClick={() => handleDeletePost(post.id)} />
               </div>
             </div>
           ))

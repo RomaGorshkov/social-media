@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { addNewPost, fetchAllPosts, fetchUserPosts } from '../slices/postsSlice';
+import { addNewPost, deletePost, fetchAllPosts, fetchUserPosts } from '../slices/postsSlice';
 import { Post } from '../../types/index';
 
 interface PostsState {
@@ -61,6 +61,19 @@ const postsSlice = createSlice({
       .addCase(addNewPost.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to add new post';
+      })
+      .addCase(deletePost.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allPosts = state.allPosts.filter((post) => post.id !== action.payload);
+        state.userPosts = state.userPosts.filter((post) => post.id !== action.payload);
+      })
+      .addCase(deletePost.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to delete post';
       });
   },
 });

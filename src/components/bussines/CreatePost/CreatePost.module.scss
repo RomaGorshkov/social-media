@@ -137,4 +137,24 @@
       }
     }
   }
+
+  &__deletePost {
+    float: right;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text);
+    font-size: 22px;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: rgb(155, 13, 13);
+    }
+  }
+
+  &__noPosts {
+    text-align: center;
+    color: var(--color-text);
+    font-size: 18px;
+    margin-top: 20px;
+  }
 }
