@@ -1,11 +1,18 @@
 export interface User {
-  username: string;
+  displayName: string;
   email: string;
-  password: string;
-  image?: string;
-  id?: string;
-  rememberMe?: boolean;
-  isAuthenticated: boolean;
+  emailVerified?: boolean;
+  photoURL: string;
+  uid: string;
+  phoneNumber?: string;
+}
+
+export interface Post {
+  id: string;
+  title: string;
+  content: string;
+  userId: string;
+  createdAt: number;
 }
 
 export interface RegisterUserSchema {

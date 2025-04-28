@@ -1,0 +1,160 @@
+.post {
+  margin-top: 20px;
+  width: 100%;
+
+  &__createPost {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  &__textareaContainer {
+    display: inline-block;
+    position: relative;
+  }
+
+  &__textareaIcon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    padding: 5px;
+    color: #999;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  &__textarea {
+    width: 100%;
+    padding: 10px;
+    padding-right: 30px;
+    border-radius: 8px;
+    border: none;
+    background: #222;
+    color: var(--color-text);
+    resize: none;
+    min-height: 80px;
+    box-sizing: border-box;
+  }
+
+  &__addPostButton {
+    align-self: flex-end;
+    width: 100px;
+    margin-top: 10px;
+    background-color: var(--color-accent);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #164fa5;
+    }
+
+    &:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+  }
+
+  &__postsList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__loading {
+    text-align: center;
+    padding: 20px;
+  }
+
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #ccc;
+    border-top: 5px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  &__loadingText {
+    margin-top: 10px;
+    color: var(--color-text);
+  }
+
+  &__posts {
+    background: #1e1e25;
+    border-radius: 10px;
+    padding: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInPost 0.4s forwards;
+  }
+
+  @keyframes fadeInPost {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__postsHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: var(--color-accent);
+  }
+
+  &__postsText {
+    margin: 5px 0 10px;
+  }
+
+  &__postsActions {
+    display: flex;
+    gap: 15px;
+
+    button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text);
+      font-size: 18px;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: var(--color-accent);
+      }
+    }
+  }
+
+  &__deletePost {
+    float: right;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text);
+    font-size: 22px;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: rgb(155, 13, 13);
+    }
+  }
+
+  &__noPosts {
+    text-align: center;
+    color: var(--color-text);
+    font-size: 18px;
+    margin-top: 20px;
+  }
+}

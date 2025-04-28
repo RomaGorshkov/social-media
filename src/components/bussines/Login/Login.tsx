@@ -33,10 +33,10 @@ const Login: React.FC = () => {
       dispatch(
         setLoginUser({
           email: user.email,
-          username: user.displayName,
+          displayName: user.displayName,
         }),
       );
-      navigate('/');
+      navigate('/profile');
     },
   });
 

@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
             <div className={styles.navbar__authAccount}>
               <div className={styles.navbar__userName}>
                 <MdAccountCircle className={styles.navbar__accountInfoIcon} />
-                {user?.username}
+                {user?.displayName}
               </div>
               <button onClick={handleLogout} className={styles.navbar__logoutButton}>
                 Logout

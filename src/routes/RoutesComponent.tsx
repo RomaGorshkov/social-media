@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import PrivateLayout from '../layouts/PrivateLayout/PrivateLayout';
-import { CoinsPage, HomePage, LoginPage, RegisterPage } from '../pages';
+import { CoinsPage, HomePage, LoginPage, ProfilePage, RegisterPage } from '../pages';
 
 const RoutesComponent: React.FC = () => {
   return (
@@ -12,6 +12,7 @@ const RoutesComponent: React.FC = () => {
       <Route element={<PrivateLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/coins" element={<CoinsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Route>
     </Routes>
   );
