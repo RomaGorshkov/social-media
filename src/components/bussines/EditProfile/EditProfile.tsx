@@ -1,34 +1,47 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 
 import { validationEditUserSchema } from '../../../yupSchemas/editUserSchema';
-import { useAppSelector } from '../../../store/storeHooks';
+import { updateUserProfile } from '../../../store/slices/updateUserProfileSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
 import { UserInputs } from '../../../types';
 import CustomInput from '../../shared/CustomInput/CustomInput';
 
 import styles from './EditProfile.module.scss';
 
 const editProfileInputs: UserInputs[] = [
-  { type: 'text', id: 'displayName', name: 'Display Name', placeholder: 'Enter your new display name' },
-  { type: 'email', id: 'email', name: 'Email', placeholder: 'Enter your new email' },
-  { type: 'tel', id: 'phoneNumber', name: 'Phone Number', placeholder: 'Enter your new phone number' },
+  { type: 'text', id: 'displayName', name: 'displayName', placeholder: 'Enter your new display name' },
+  { type: 'email', id: 'email', name: 'email', placeholder: 'Enter your new email' },
 ];
 
-const EditProfile: React.FC = () => {
-  const navigate = useNavigate();
+interface EditProfileProps {
+  changeEditMode: () => void;
+}
+
+const EditProfile: React.FC<EditProfileProps> = ({ changeEditMode }) => {
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
 
   const formik = useFormik({
     initialValues: {
-      displayName: user?.displayName || '',
-      email: user?.email || '',
-      phoneNumber: user?.phoneNumber || '',
-      photoURL: user?.photoURL || '',
+      displayName: '',
+      email: '',
+      photoURL: '',
     },
     validationSchema: validationEditUserSchema,
     onSubmit: async (values, { setFieldError }) => {
-      navigate('/profile');
+      try {
+        const updatedUser = {
+          displayName: values.displayName,
+          email: values.email,
+          photoURL: values.photoURL,
+        };
+        await dispatch(updateUserProfile(updatedUser)).unwrap();
+        console.log('User profile updated successfully:', updatedUser);
+      } catch (error) {
+        setFieldError('email', 'Failed to update email. Please try again.');
+        console.error('Error updating user profile:', error);
+      }
     },
   });
 
@@ -41,6 +54,7 @@ const EditProfile: React.FC = () => {
         ) : (
           <div className={styles.editProfile__avatarPlaceholder}>{user?.displayName ? user.displayName[0] : 'U'}</div>
         )}
+        <h2 className={styles.editProfile__name}>{user?.displayName}</h2>
         {editProfileInputs.map(({ type, id, name, placeholder }) => (
           <CustomInput
             key={id}
@@ -56,7 +70,7 @@ const EditProfile: React.FC = () => {
           />
         ))}
         <div className={styles.editProfile__submitGroup}>
-          <button type="button" className={styles.editProfile__cancelButton} onClick={() => navigate('/profile')}>
+          <button type="button" className={styles.editProfile__cancelButton} onClick={changeEditMode}>
             Cancel
           </button>
           <button

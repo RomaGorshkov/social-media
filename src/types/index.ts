@@ -30,7 +30,6 @@ export interface LoginUserSchema {
 export interface EditUserSchema {
   displayName: string;
   email: string;
-  phoneNumber: string;
   photoURL: string;
 }
 

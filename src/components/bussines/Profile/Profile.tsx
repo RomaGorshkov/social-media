@@ -21,7 +21,7 @@ const Profile: React.FC = () => {
   return (
     <>
       {editMode ? (
-        <EditProfile />
+        <EditProfile changeEditMode={changeEditMode} />
       ) : (
         <div className={styles.profile}>
           <div className={styles.profile__editIcon}>

@@ -36,8 +36,12 @@ const Login: React.FC = () => {
         const user = await loginUser(values.email, values.password, values.rememberMe);
         dispatch(
           setLoginUser({
-            email: user.email,
             displayName: user.displayName,
+            email: user.email,
+            uid: user.uid,
+            photoURL: user.photoURL,
+            phoneNumber: user.phoneNumber,
+            emailVerified: user.emailVerified,
           }),
         );
         navigate('/profile');

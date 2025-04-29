@@ -1,17 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { User } from '../../types/index';
+import { updateUserProfile } from '../slices/updateUserProfileSlice';
 
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
-  error: string;
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
-  error: '',
+  loading: false,
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -30,6 +33,22 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        console.log('User profile updated successfully:', action.payload);
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to update user profile';
+      });
   },
 });
 
