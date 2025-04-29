@@ -7,7 +7,7 @@ import { setRegisterUser } from '../../../store/reducers/auth';
 import { useAppDispatch } from '../../../store/storeHooks';
 import { registerUser } from '../../../firebase/authUser';
 
-import { AuthInput } from '../../../types';
+import { UserInputs } from '../../../types';
 
 import AuthLayout from '../../../layouts/AuthLayout/AuthLayout';
 import CustomInput from '../../shared/CustomInput/CustomInput';
@@ -16,7 +16,7 @@ import { validationRegisterSchema } from '../../../yupSchemas/registerSchema';
 
 import styles from './Register.module.scss';
 
-const registerInputs: AuthInput[] = [
+const registerInputs: UserInputs[] = [
   { type: 'text', id: 'username', name: 'username', placeholder: 'Username' },
   { type: 'email', id: 'email', name: 'email', placeholder: 'Email' },
   { type: 'password', id: 'password', name: 'password', placeholder: 'Password' },

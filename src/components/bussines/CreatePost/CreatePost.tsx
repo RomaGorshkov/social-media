@@ -86,11 +86,13 @@ const CreatePost: React.FC = () => {
         ) : userPosts.length ? (
           sortedPosts.map((post, index) => (
             <div className={styles.post__posts} key={index}>
-              <div className={styles.post__postsHeader}>
-                <strong>{user?.displayName}</strong>
-                <span>{new Date(post.createdAt).toLocaleString()}</span>
+              <div className={styles.post__postsBody}>
+                <div className={styles.post__postsHeader}>
+                  <strong>{user?.displayName}</strong>
+                  <span>{new Date(post.createdAt).toLocaleString()}</span>
+                </div>
+                <p className={styles.post__postsText}>{post.content}</p>
               </div>
-              <p className={styles.post__postsText}>{post.content}</p>
               <div className={styles.post__deletePost}>
                 <MdOutlineDelete onClick={() => handleDeletePost(post.id)} />
               </div>

@@ -11,6 +11,23 @@
   color: var(--color-text);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
+  &__editIcon {
+    width: 100%;
+    border: none;
+
+    svg {
+      float: right;
+      font-size: 24px;
+      transition: color 0.2s ease;
+      color: var(--color-text);
+
+      &:hover {
+        cursor: pointer;
+        color: var(--color-accent);
+      }
+    }
+  }
+
   &__avatar {
     width: 120px;
     height: 120px;

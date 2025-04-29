@@ -27,7 +27,14 @@ export interface LoginUserSchema {
   rememberMe: boolean;
 }
 
-export interface AuthInput {
+export interface EditUserSchema {
+  displayName: string;
+  email: string;
+  phoneNumber: string;
+  photoURL: string;
+}
+
+export interface UserInputs {
   type: string;
   id: string;
   name: string;
