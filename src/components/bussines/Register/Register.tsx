@@ -42,7 +42,7 @@ const Register: React.FC = () => {
         };
         await registerUser(userPayload.username, userPayload.email, userPayload.password);
         dispatch(setRegisterUser(userPayload));
-        navigate('/');
+        navigate('/profile');
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
           if (error.code === 'auth/email-already-in-use') {

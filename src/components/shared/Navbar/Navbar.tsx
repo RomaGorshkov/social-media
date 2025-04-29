@@ -1,16 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { FaCreativeCommons } from 'react-icons/fa';
-import { FaHome } from 'react-icons/fa';
-import { FaCoins } from 'react-icons/fa';
-import { FaHashtag } from 'react-icons/fa';
+import { FaCoins, FaHashtag, FaHome, FaCreativeCommons } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
 import { MdAccountCircle } from 'react-icons/md';
 
 import { setLogoutUser } from '../../../store/reducers/auth';
 import { logoutUser } from '../../../firebase/authUser';
-import { useAppSelector } from '../../../store/storeHooks';
+import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
 
 import styles from './Navbar.module.scss';
 
@@ -22,14 +19,18 @@ const navLinks = [
 ];
 
 const Navbar: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
 
   const handleLogout = async () => {
-    await logoutUser();
-    setLogoutUser();
-    setIsMenuOpen(!isMenuOpen);
+    try {
+      await logoutUser();
+      dispatch(setLogoutUser());
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (

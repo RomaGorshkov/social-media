@@ -8,6 +8,7 @@ import Preloader from './components/shared/Preloader/Preloader';
 import { useAppDispatch } from './store/storeHooks';
 import { setLoginUser, setLogoutUser } from './store/reducers/auth';
 import { auth } from './firebase/config';
+import { fetchUserPosts } from './store/slices/postsSlice';
 
 const App: React.FC = () => {
   const [isAuthChecked, setIsAuthChecked] = React.useState(false);
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           phoneNumber: user.phoneNumber,
           emailVerified: user.emailVerified,
         };
+        dispatch(fetchUserPosts(user.uid));
         dispatch(setLoginUser(userData));
       } else {
         dispatch(setLogoutUser());

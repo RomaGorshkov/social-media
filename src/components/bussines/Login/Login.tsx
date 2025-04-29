@@ -1,12 +1,14 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
+import { FirebaseError } from 'firebase/app';
 
 import { AuthInput } from '../../../types';
 
 import { useAppDispatch } from '../../../store/storeHooks';
 import { loginUser } from '../../../firebase/authUser';
 import { setLoginUser } from '../../../store/reducers/auth';
+import { validationLoginSchema } from '../../../yupSchemas/loginSchema';
 
 import AuthLayout from '../../../layouts/AuthLayout/AuthLayout';
 import CustomInput from '../../shared/CustomInput/CustomInput';
@@ -28,15 +30,26 @@ const Login: React.FC = () => {
       password: '',
       rememberMe: false,
     },
-    onSubmit: async (values) => {
-      const user = await loginUser(values.email, values.password, values.rememberMe);
-      dispatch(
-        setLoginUser({
-          email: user.email,
-          displayName: user.displayName,
-        }),
-      );
-      navigate('/profile');
+    validationSchema: validationLoginSchema,
+    onSubmit: async (values, { setFieldError }) => {
+      try {
+        const user = await loginUser(values.email, values.password, values.rememberMe);
+        dispatch(
+          setLoginUser({
+            email: user.email,
+            displayName: user.displayName,
+          }),
+        );
+        navigate('/profile');
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
+          if (error.code === 'auth/invalid-credential') {
+            setFieldError('password', 'Invalid credentials. Please try again.');
+          }
+        } else {
+          console.error('Unknown error:', error);
+        }
+      }
     },
   });
 

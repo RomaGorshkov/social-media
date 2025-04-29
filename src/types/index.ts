@@ -21,6 +21,12 @@ export interface RegisterUserSchema {
   password: string;
 }
 
+export interface LoginUserSchema {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
+
 export interface AuthInput {
   type: string;
   id: string;
