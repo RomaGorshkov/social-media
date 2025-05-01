@@ -2,21 +2,12 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
-  getAuth,
   signOut,
+  sendEmailVerification,
 } from 'firebase/auth';
 
-import { auth } from './config';
-
-export const getFirebaseToken = async () => {
-  const user = getAuth().currentUser;
-  if (user) {
-    const token = await user.getIdToken(true);
-    return token;
-  } else {
-    throw new Error('User is not authenticated');
-  }
-};
+import { auth, db } from './config';
+import { doc, setDoc } from 'firebase/firestore';
 
 export const registerUser = async (username: string, email: string, password: string) => {
   try {
@@ -27,12 +18,20 @@ export const registerUser = async (username: string, email: string, password: st
       displayName: username,
     });
 
-    const token = await getFirebaseToken();
+    const userDocRef = doc(db, 'users', user.uid);
+    await setDoc(userDocRef, {
+      uid: user.uid,
+      displayName: username,
+      email: user.email,
+      photoURL: user.photoURL,
+    });
+    console.log('Firestore document created for user:', user.uid);
 
-    localStorage.setItem('firebaseToken', token);
+    await sendEmailVerification(user);
+    console.log('Verification letter sent to: ', user.email);
 
     return user;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error registering user:', error);
     throw error;
   }
@@ -43,15 +42,18 @@ export const loginUser = async (email: string, password: string, rememberMe: boo
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    const token = await user.getIdToken();
+    if (!user.emailVerified) {
+      const error = new Error('Please verify your email before logging in.');
+      (error as any).code = 'auth/email-not-verified';
+      throw error;
+    }
 
     if (rememberMe) {
-      localStorage.setItem('firebase_token', token);
-    } else {
-      sessionStorage.setItem('firebase_token', token);
+      localStorage.setItem('firebase_token', user.refreshToken);
     }
+
     return user;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error logging in user:', error);
     throw error;
   }
@@ -60,8 +62,6 @@ export const loginUser = async (email: string, password: string, rememberMe: boo
 export const logoutUser = async () => {
   try {
     await signOut(auth);
-    localStorage.removeItem('firebase_token');
-    sessionStorage.removeItem('firebase_token');
   } catch (error) {
     console.error('Logout error:', error);
     throw error;

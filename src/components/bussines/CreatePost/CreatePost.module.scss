@@ -32,7 +32,7 @@
     background: #222;
     color: var(--color-text);
     resize: none;
-    min-height: 80px;
+    min-height: 100px;
     box-sizing: border-box;
   }
 
@@ -94,7 +94,8 @@
   }
 
   &__posts {
-    background: #1e1e25;
+    display: flex;
+    background: #202430;
     border-radius: 10px;
     padding: 15px;
     opacity: 0;
@@ -107,6 +108,10 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  &__postsBody {
+    width: 100%;
   }
 
   &__postsHeader {
@@ -139,15 +144,17 @@
   }
 
   &__deletePost {
-    float: right;
-    border: none;
-    cursor: pointer;
-    color: var(--color-text);
-    font-size: 22px;
-    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    svg {
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--color-text);
+      transition: color 0.2s ease;
 
-    &:hover {
-      color: rgb(155, 13, 13);
+      &:hover {
+        color: #d24a32;
+      }
     }
   }
 
@@ -155,6 +162,5 @@
     text-align: center;
     color: var(--color-text);
     font-size: 18px;
-    margin-top: 20px;
   }
 }

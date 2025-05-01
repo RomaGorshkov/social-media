@@ -5,6 +5,7 @@ export interface User {
   photoURL: string;
   uid: string;
   phoneNumber?: string;
+  emailPending?: string;
 }
 
 export interface Post {
@@ -21,7 +22,20 @@ export interface RegisterUserSchema {
   password: string;
 }
 
-export interface AuthInput {
+export interface LoginUserSchema {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+export interface EditUserSchema {
+  displayName: string;
+  email: string;
+  photoURL: string;
+  currentPassword: string;
+}
+
+export interface UserInputs {
   type: string;
   id: string;
   name: string;

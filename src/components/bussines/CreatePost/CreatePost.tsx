@@ -1,9 +1,9 @@
 import React from 'react';
-import EmojiPicker, { Theme } from 'emoji-picker-react';
+import EmojiPicker, { EmojiStyle, Theme } from 'emoji-picker-react';
 import { MdOutlineEmojiEmotions, MdOutlineDelete } from 'react-icons/md';
 
 import { useAppDispatch, useAppSelector } from '../../../store/storeHooks';
-import { addNewPost, deletePost, fetchUserPosts } from '../../../store/slices/postsSlice';
+import { addNewPost, deletePost } from '../../../store/slices/postsSlice';
 
 import styles from './CreatePost.module.scss';
 
@@ -20,12 +20,6 @@ const CreatePost: React.FC = () => {
   const { userPosts, loading } = useAppSelector((state) => state.posts);
 
   const sortedPosts = [...userPosts].sort((a, b) => b.createdAt - a.createdAt);
-
-  React.useEffect(() => {
-    if (user) {
-      dispatch(fetchUserPosts(user.uid));
-    }
-  }, [user, dispatch]);
 
   const handleAddPost = async () => {
     if (!postText.trim() || !user) return;
@@ -76,7 +70,9 @@ const CreatePost: React.FC = () => {
             onClick={() => setShowEmojiPicker((prev) => !prev)}
           />
         </div>
-        {showEmojiPicker && <EmojiPicker onEmojiClick={handleEmojiClick} theme={Theme.DARK} />}
+        {showEmojiPicker && (
+          <EmojiPicker onEmojiClick={handleEmojiClick} theme={Theme.DARK} emojiStyle={EmojiStyle.NATIVE} />
+        )}
         <button className={styles.post__addPostButton} onClick={handleAddPost} disabled={!postText.trim() || isAdding}>
           {isAdding ? 'Posting...' : 'Post'}
         </button>
@@ -90,11 +86,13 @@ const CreatePost: React.FC = () => {
         ) : userPosts.length ? (
           sortedPosts.map((post, index) => (
             <div className={styles.post__posts} key={index}>
-              <div className={styles.post__postsHeader}>
-                <strong>{user?.displayName}</strong>
-                <span>{new Date(post.createdAt).toLocaleString()}</span>
+              <div className={styles.post__postsBody}>
+                <div className={styles.post__postsHeader}>
+                  <strong>{user?.displayName}</strong>
+                  <span>{new Date(post.createdAt).toLocaleString()}</span>
+                </div>
+                <p className={styles.post__postsText}>{post.content}</p>
               </div>
-              <p className={styles.post__postsText}>{post.content}</p>
               <div className={styles.post__deletePost}>
                 <MdOutlineDelete onClick={() => handleDeletePost(post.id)} />
               </div>
