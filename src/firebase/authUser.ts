@@ -6,7 +6,8 @@ import {
   sendEmailVerification,
 } from 'firebase/auth';
 
-import { auth } from './config';
+import { auth, db } from './config';
+import { doc, setDoc } from 'firebase/firestore';
 
 export const registerUser = async (username: string, email: string, password: string) => {
   try {
@@ -17,11 +18,20 @@ export const registerUser = async (username: string, email: string, password: st
       displayName: username,
     });
 
+    const userDocRef = doc(db, 'users', user.uid);
+    await setDoc(userDocRef, {
+      uid: user.uid,
+      displayName: username,
+      email: user.email,
+      photoURL: user.photoURL,
+    });
+    console.log('Firestore document created for user:', user.uid);
+
     await sendEmailVerification(user);
     console.log('Verification letter sent to: ', user.email);
 
     return user;
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error('Error registering user:', error);
     throw error;
   }
@@ -34,7 +44,6 @@ export const loginUser = async (email: string, password: string, rememberMe: boo
 
     if (!user.emailVerified) {
       const error = new Error('Please verify your email before logging in.');
-
       (error as any).code = 'auth/email-not-verified';
       throw error;
     }
@@ -44,7 +53,7 @@ export const loginUser = async (email: string, password: string, rememberMe: boo
     }
 
     return user;
-  } catch (error: unknown) {
+  } catch (error: any) {
     console.error('Error logging in user:', error);
     throw error;
   }

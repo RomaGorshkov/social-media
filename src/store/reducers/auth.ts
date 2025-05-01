@@ -6,14 +6,14 @@ import { updateUserProfile } from '../slices/updateUserProfileSlice';
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
-  loading: boolean;
+  isLoading: boolean;
   error: string | null;
 }
 
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
-  loading: false,
+  isLoading: false,
   error: null,
 };
 
@@ -33,24 +33,28 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
     },
+    userProfileUpdated: (state, action) => {
+      state.user = {
+        ...state.user,
+        ...action.payload,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(updateUserProfile.pending, (state) => {
-        state.loading = true;
+        state.isLoading = true;
         state.error = null;
       })
-      .addCase(updateUserProfile.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload;
-        console.log('User profile updated successfully:', action.payload);
+      .addCase(updateUserProfile.fulfilled, (state) => {
+        state.isLoading = false;
       })
-      .addCase(updateUserProfile.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || 'Failed to update user profile';
+      .addCase(updateUserProfile.rejected, (state) => {
+        state.isLoading = false;
+        state.error = 'Failed to update user profile';
       });
   },
 });
 
-export const { setRegisterUser, setLoginUser, setLogoutUser } = authSlice.actions;
+export const { setRegisterUser, setLoginUser, setLogoutUser, userProfileUpdated } = authSlice.actions;
 export const authReducer = authSlice.reducer;

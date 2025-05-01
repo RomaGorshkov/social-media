@@ -5,6 +5,7 @@ export interface User {
   photoURL: string;
   uid: string;
   phoneNumber?: string;
+  emailPending?: string;
 }
 
 export interface Post {
@@ -31,6 +32,7 @@ export interface EditUserSchema {
   displayName: string;
   email: string;
   photoURL: string;
+  currentPassword: string;
 }
 
 export interface UserInputs {
